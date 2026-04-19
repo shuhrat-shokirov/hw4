@@ -51,5 +51,7 @@ func main() {
 	fmt.Println(converted)
 }
 
+const tiinToSum = 100
+
 //10 000 000.99
 //10 000 000 99

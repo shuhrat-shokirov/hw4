@@ -6,7 +6,7 @@ func ExampleConverter() {
 	var example = Product{
 		Name:    "ABC",
 		Brand:   "a",
-		Price:   1299000000,
+		Price:   12_990_000_00,
 		InStock: true,
 	}
 	converter := Converter(example, Calculate(example.Price))
@@ -15,9 +15,9 @@ func ExampleConverter() {
 	//===== Alifshop =====
 	//Товар:    ABC
 	//Бренд:    a
-	//Цена:     12990000 сум
+	//Цена:     12 990 000 сум
 	//В наличии: true
-	//Рассрочка: 12 мес → 1082500 сум/мес
+	//Рассрочка: 12 мес → 1 082 500 сум/мес
 	//====================
 }
 func ExampleConverter_tiin() {

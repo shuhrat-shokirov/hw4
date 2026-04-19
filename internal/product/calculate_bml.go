@@ -18,10 +18,10 @@ func PriceFormating(price int) string {
 	tiin := price % tiinToSum
 	sum := price / tiinToSum
 	formatted := InsertingSpace(sum)
-	if tiin%tiinToSum == 0 {
-		return fmt.Sprintf("%.2d", sum)
+	if tiin == 0 {
+		return formatted
 	}
-	return fmt.Sprintf("%s.%2d", formatted, tiin)
+	return fmt.Sprintf("%s.%02d", formatted, tiin)
 }
 
 func InsertingSpace(price int) string {
