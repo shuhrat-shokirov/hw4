@@ -43,7 +43,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	productInfo.Price = int(price)
+	productInfo.Price = int(price * tiinToSum)
 
 	calculatedAmount := product.Calculate(productInfo.Price)
 
