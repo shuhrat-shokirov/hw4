@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ main, master ]
 
+permissions:
+  contents: read
+  checks: write
+
 jobs:
   test:
     name: Run Tests
@@ -33,7 +37,10 @@ jobs:
 
     - name: Run tests
       run: |
-        go test -v -cover ./... -json | tee test-results.json
+        go test -v -cover ./... -json > test-results.json
+        TEST_EXIT_CODE=$?
+        cat test-results.json
+        exit $TEST_EXIT_CODE
 
     - name: Generate test summary
       if: always()
