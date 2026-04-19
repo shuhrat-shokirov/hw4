@@ -25,8 +25,8 @@ const (
 func Converter(product Product, firstAmount int) string {
 	text := strings.ReplaceAll(template, "{name}", product.Name)
 	text = strings.ReplaceAll(text, "{brand}", product.Brand)
-	text = strings.ReplaceAll(text, "{price}", strconv.Itoa(product.Price))
+	text = strings.ReplaceAll(text, "{price}", PriceFormating(product.Price))
 	text = strings.ReplaceAll(text, "{inStock}", strconv.FormatBool(product.InStock))
-	text = strings.ReplaceAll(text, "{firstAmount}", strconv.Itoa(firstAmount))
+	text = strings.ReplaceAll(text, "{firstAmount}", PriceFormating(firstAmount))
 	return text
 }
