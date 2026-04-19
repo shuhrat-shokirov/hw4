@@ -65,6 +65,7 @@ jobs:
 
     - name: Check required tests individually
       id: check_required
+      if: always()
       run: |
         echo "## Checking Required Tests" | tee test_check.txt
         echo "" | tee -a test_check.txt
@@ -159,7 +160,12 @@ jobs:
       with:
         script: |
           const fs = require('fs');
-          const testOutput = fs.readFileSync('test_check.txt', 'utf8');
+          let testOutput = '';
+          try {
+            testOutput = fs.readFileSync('test_check.txt', 'utf8');
+          } catch (err) {
+            testOutput = '⚠️ Test check file not found. Tests may not have completed properly.';
+          }
           const coverage = process.env.coverage || 'N/A';
           const grade = '${{ steps.check_required.outputs.grade }}' || 'UNKNOWN';
 
