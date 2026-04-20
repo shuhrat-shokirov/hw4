@@ -10,10 +10,6 @@ import (
 	"product/internal/product"
 )
 
-const (
-	tiinToSum = 100
-)
-
 func main() {
 	var productInfo product.Product
 
@@ -34,7 +30,7 @@ func main() {
 
 	price, err := strconv.ParseFloat(priceStr, 64)
 	if err != nil {
-		fmt.Println("Вы ввели неправильную сумму")
+		fmt.Println("вы вели не правильную сумму")
 		return
 	}
 
@@ -44,8 +40,7 @@ func main() {
 
 	productInfo.InStock, err = strconv.ParseBool(stockStr)
 	if err != nil {
-		fmt.Println("Некорректное значение для наличия. Введите 0 или 1")
-		return
+		productInfo.InStock = false
 	}
 
 	productInfo.Price = int(price * tiinToSum)
@@ -55,3 +50,7 @@ func main() {
 
 	fmt.Println(converted)
 }
+
+const (
+	tiinToSum = 100
+)
