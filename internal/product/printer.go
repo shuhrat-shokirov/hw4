@@ -1,6 +1,7 @@
 package product
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -22,11 +23,33 @@ const (
 ====================`
 )
 
+func formatTiin(amount int) string {
+	sum := amount / 100
+	tiins := amount % 100
+
+	sumsStr := strconv.Itoa(sum)
+	var result []byte
+	for i, ch := range sumsStr {
+		remaining := len(sumsStr) - i - 1
+		result = append(result, byte(ch))
+		if remaining > 0 && remaining%3 == 0 {
+			result = append(result, ' ')
+		}
+	}
+	formatted := string(result)
+
+	if tiins != 0 {
+		formatted += fmt.Sprintf(".%02d", tiins)
+	}
+
+	return formatted
+}
+
 func Converter(product Product, firstAmount int) string {
 	text := strings.ReplaceAll(template, "{name}", product.Name)
 	text = strings.ReplaceAll(text, "{brand}", product.Brand)
-	text = strings.ReplaceAll(text, "{price}", strconv.Itoa(product.Price))
+	text = strings.ReplaceAll(text, "{price}", formatTiin(product.Price))
 	text = strings.ReplaceAll(text, "{inStock}", strconv.FormatBool(product.InStock))
-	text = strings.ReplaceAll(text, "{firstAmount}", strconv.Itoa(firstAmount))
+	text = strings.ReplaceAll(text, "{firstAmount}", formatTiin(firstAmount))
 	return text
 }

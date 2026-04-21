@@ -16,29 +16,31 @@ func main() {
 	)
 
 	reader := bufio.NewReader(os.Stdin)
+
 	fmt.Print("Product info: ")
 	productInfo.Name, _ = reader.ReadString('\n')
-
-	productInfo.Name = strings.TrimSuffix(productInfo.Name, "\n")
+	productInfo.Name = strings.TrimSpace(productInfo.Name)
 
 	fmt.Print("Brand: ")
 	productInfo.Brand, _ = reader.ReadString('\n')
-	productInfo.Brand = strings.TrimSuffix(productInfo.Brand, "\n")
+	productInfo.Brand = strings.TrimSpace(productInfo.Brand)
+
 	fmt.Print("Price: ")
 	priceStr, _ := reader.ReadString('\n')
-	priceStr = strings.TrimSuffix(priceStr, "\n")
+	priceStr = strings.TrimSpace(priceStr)
 	priceStr = strings.ReplaceAll(priceStr, " ", "")
 	price, err := strconv.ParseFloat(priceStr, 64)
 	if err != nil {
 		fmt.Println("вы вели не правильную сумму")
+		return
 	}
 
 	fmt.Print("In stock? (0-false,1-true): ")
 	stockStr, _ := reader.ReadString('\n')
-	stockStr = strings.TrimSuffix(stockStr, "\n")
+	stockStr = strings.TrimSpace(stockStr)
 	productInfo.InStock, err = strconv.ParseBool(stockStr)
 	if err != nil {
-		fmt.Println(err)
+		productInfo.InStock = false
 	}
 
 	productInfo.Price = int(price * tiinToSum)
