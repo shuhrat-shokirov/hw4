@@ -30,7 +30,8 @@ func main() {
 	priceStr = strings.ReplaceAll(priceStr, " ", "")
 	price, err := strconv.ParseFloat(priceStr, 64)
 	if err != nil {
-		fmt.Println("вы вели не правильную сумму")
+		fmt.Fprintln(os.Stderr, "Некорректная цена. Введите число, например: 12990000 или 12990000.99")
+		os.Exit(1)
 	}
 
 	fmt.Print("In stock? (0-false,1-true): ")
@@ -38,7 +39,8 @@ func main() {
 	stockStr = strings.TrimSuffix(stockStr, "\n")
 	productInfo.InStock, err = strconv.ParseBool(stockStr)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Fprintln(os.Stderr, "Некорректное значение. Используйте 0 для false или 1 для true")
+		os.Exit(1)
 	}
 
 	productInfo.Price = int(price * tiinToSum)
