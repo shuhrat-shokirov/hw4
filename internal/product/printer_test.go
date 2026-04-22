@@ -14,7 +14,7 @@ func ExampleConverter() {
 	}
 	converter := Converter(example, Calculate(example.Price))
 	fmt.Println(converter)
-	//OutPut:
+	//Output:
 	//===== Alifshop =====
 	//Товар:    ABC
 	//Бренд:    a
