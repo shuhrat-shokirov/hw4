@@ -50,7 +50,7 @@ func FormatPrice(amount int) string {
 		result = append([]string{s[start:i]}, result...)
 	}
 	formattedSum := strings.Join(result, " ")
-	
+
 	if tiyin != 0 {
 		return fmt.Sprintf("%s.%02d", formattedSum, tiyin)
 	}
