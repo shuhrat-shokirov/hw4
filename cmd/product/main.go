@@ -28,9 +28,9 @@ func main() {
 	priceStr = strings.TrimSpace(priceStr)
 	priceStr = strings.ReplaceAll(priceStr, " ", "")
 
-	price, err := strconv.Atoi(priceStr)
+	price, err := strconv.ParseFloat(priceStr, 64)
 	if err != nil {
-		fmt.Println("Ошибка: некорректный формат цены. Введите целое число.")
+		fmt.Println("вы вели не правильную сумму", err)
 		return
 		//price, err := strconv.ParseFloat(priceStr, 64)
 		//if err != nil {
@@ -44,9 +44,9 @@ func main() {
 	productInfo.InStock, err = strconv.ParseBool(stockStr)
 	if err != nil {
 		fmt.Println("Ошибка: введите корректное значение наличия (true/false).")
-		return
+
 	}
-	
+
 	productInfo.Price = int(price * tiinToSum)
 
 	calculatedAmount := product.Calculate(productInfo.Price)
