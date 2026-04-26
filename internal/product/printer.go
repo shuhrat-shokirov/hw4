@@ -1,7 +1,7 @@
 package product
 
 import (
-	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -22,30 +22,36 @@ const (
 ====================`
 )
 
-func formatSum(tiin int) string {
-	sums := tiin / 100
-	tiins := tiin % 100
+func formatTiyin(amount int) string {
+	sums := amount / 100
+	tiin := amount % 100
 
-	s := fmt.Sprintf("%d", sums)
-	result := ""
-	for i, ch := range s {
-		if i > 0 && (len(s)-i)%3 == 0 {
-			result += " "
+	sumsStr := strconv.Itoa(sums)
+	var intFormatted strings.Builder
+	offset := len(sumsStr) % 3
+	for i, ch := range sumsStr {
+		if i != 0 && (i-offset)%3 == 0 {
+			intFormatted.WriteByte(' ')
 		}
-		result += string(ch)
+		intFormatted.WriteRune(ch)
 	}
 
-	if tiins == 0 {
-		return result
+	if tiin == 0 {
+		return intFormatted.String()
 	}
-	return fmt.Sprintf("%s.%02d", result, tiins)
+
+	tiinStr := strconv.Itoa(tiin)
+	if len(tiinStr) == 1 {
+		tiinStr = "0" + tiinStr
+	}
+	return intFormatted.String() + "." + tiinStr
 }
 
 func Converter(product Product, firstAmount int) string {
 	text := strings.ReplaceAll(template, "{name}", product.Name)
 	text = strings.ReplaceAll(text, "{brand}", product.Brand)
-	text = strings.ReplaceAll(text, "{price}", formatSum(product.Price))
-	text = strings.ReplaceAll(text, "{inStock}", fmt.Sprintf("%v", product.InStock))
-	text = strings.ReplaceAll(text, "{firstAmount}", formatSum(firstAmount))
+	text = strings.ReplaceAll(text, "{price}", formatTiyin(product.Price))
+	text = strings.ReplaceAll(text, "{inStock}", strconv.FormatBool(product.InStock))
+	text = strings.ReplaceAll(text, "{firstAmount}", formatTiyin(firstAmount))
 	return text
 }
