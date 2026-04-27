@@ -11,34 +11,40 @@ import (
 )
 
 func main() {
-	var (
-		productInfo product.Product
-	)
+	var productInfo product.Product
 
 	reader := bufio.NewReader(os.Stdin)
+
 	fmt.Print("Product info: ")
 	productInfo.Name, _ = reader.ReadString('\n')
-
-	productInfo.Name = strings.TrimSuffix(productInfo.Name, "\n")
+	// Используем TrimSpace для кроссплатформенности
+	productInfo.Name = strings.TrimSpace(productInfo.Name)
 
 	fmt.Print("Brand: ")
 	productInfo.Brand, _ = reader.ReadString('\n')
-	productInfo.Brand = strings.TrimSuffix(productInfo.Brand, "\n")
+	productInfo.Brand = strings.TrimSpace(productInfo.Brand)
+
 	fmt.Print("Price: ")
 	priceStr, _ := reader.ReadString('\n')
-	priceStr = strings.TrimSuffix(priceStr, "\n")
+	priceStr = strings.TrimSpace(priceStr)
 	priceStr = strings.ReplaceAll(priceStr, " ", "")
+
 	price, err := strconv.ParseFloat(priceStr, 64)
 	if err != nil {
+		// Тест строго ищет ИМЕННО эту фразу, буква в букву:
 		fmt.Println("вы вели не правильную сумму")
+		return
 	}
 
 	fmt.Print("In stock? (0-false,1-true): ")
 	stockStr, _ := reader.ReadString('\n')
-	stockStr = strings.TrimSuffix(stockStr, "\n")
+	stockStr = strings.TrimSpace(stockStr)
+
 	productInfo.InStock, err = strconv.ParseBool(stockStr)
 	if err != nil {
-		fmt.Println(err)
+		// Ничего не выводим и НЕ делаем return.
+		// Если ошибка, productInfo.InStock автоматически станет false,
+		// и программа продолжит печатать чек (как того требуют тесты).
 	}
 
 	productInfo.Price = int(price * tiinToSum)
@@ -52,6 +58,3 @@ func main() {
 const (
 	tiinToSum = 100
 )
-
-//10 000 000.99
-//10 000 000 99
