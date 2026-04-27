@@ -1,32 +1,43 @@
 package product
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 )
 
-type Product struct {
-	Name    string
-	Brand   string
-	Price   int
-	InStock bool
+func formatMoney(tiins int) string {
+	sum := tiins / 100
+	remainder := tiins % 100
+
+	s := strconv.Itoa(sum)
+	var result []string
+
+	for i := len(s); i > 0; i -= 3 {
+		start := i - 3
+		if start < 0 {
+			start = 0
+		}
+		result = append([]string{s[start:i]}, result...)
+	}
+
+	formattedSum := strings.Join(result, " ")
+
+	if remainder > 0 {
+		return fmt.Sprintf("%s.%02d", formattedSum, remainder)
+	}
+
+	return formattedSum
 }
 
-const (
-	template = `===== Alifshop =====
-Товар:    {name}
-Бренд:    {brand}
-Цена:     {price} сум
-В наличии: {inStock}
-Рассрочка: 12 мес → {firstAmount} сум/мес
-====================`
-)
+func Converter(name, brand string, price int, isAvailable bool, installments int) {
+	monthly := price / installments
 
-func Converter(product Product, firstAmount int) string {
-	text := strings.ReplaceAll(template, "{name}", product.Name)
-	text = strings.ReplaceAll(text, "{brand}", product.Brand)
-	text = strings.ReplaceAll(text, "{price}", strconv.Itoa(product.Price))
-	text = strings.ReplaceAll(text, "{inStock}", strconv.FormatBool(product.InStock))
-	text = strings.ReplaceAll(text, "{firstAmount}", strconv.Itoa(firstAmount))
-	return text
+	fmt.Println("===== Alifshop =====")
+	fmt.Printf("Товар: %s\n", name)
+	fmt.Printf("Бренд: %s\n", brand)
+	fmt.Printf("Цена: %s сум\n", formatMoney(price))
+	fmt.Printf("В наличии: %v\n", isAvailable)
+	fmt.Printf("Рассрочка: %d мес → %s сум/мес\n", installments, formatMoney(monthly))
+	fmt.Println("====================")
 }
