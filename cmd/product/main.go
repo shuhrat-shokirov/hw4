@@ -25,6 +25,7 @@ func main() {
 	productInfo.Brand, _ = reader.ReadString('\n')
 	productInfo.Brand = strings.TrimSuffix(productInfo.Brand, "\n")
 	fmt.Print("Price: ")
+
 	priceStr, _ := reader.ReadString('\n')
 	priceStr = strings.TrimSuffix(priceStr, "\n")
 	priceStr = strings.ReplaceAll(priceStr, " ", "")
