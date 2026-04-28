@@ -6,31 +6,33 @@ import (
 	"strings"
 )
 
+// formatMoney преобразует тийины в красивую строку (например, 12 990 000.99)
 func formatMoney(tiins int) string {
-	sum := tiins / 100
-	remainder := tiins % 100
+	sum := tiins / 100 // Целые сумы
+	rem := tiins % 100 // Остаток (тийины)
 
+	// Превращаем сумы в строку и добавляем пробелы каждые 3 символа
 	s := strconv.Itoa(sum)
-	var result []string
-
+	var parts []string
 	for i := len(s); i > 0; i -= 3 {
 		start := i - 3
 		if start < 0 {
 			start = 0
 		}
-		result = append([]string{s[start:i]}, result...)
+		parts = append([]string{s[start:i]}, parts...)
 	}
+	formattedSum := strings.Join(parts, " ")
 
-	formattedSum := strings.Join(result, " ")
-
-	if remainder > 0 {
-		return fmt.Sprintf("%s.%02d", formattedSum, remainder)
+	// Если есть тийины, добавляем их через точку
+	if rem > 0 {
+		return fmt.Sprintf("%s.%02d", formattedSum, rem)
 	}
-
 	return formattedSum
 }
 
+// Converter выводит карточку товара в нужном формате
 func Converter(name, brand string, price int, isAvailable bool, installments int) {
+	// Рассчитываем ежемесячный платеж (цена / кол-во месяцев)
 	monthly := price / installments
 
 	fmt.Println("===== Alifshop =====")
