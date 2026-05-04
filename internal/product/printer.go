@@ -30,7 +30,7 @@ func Converter(product Product, firstAmount int) string {
 	text = strings.ReplaceAll(text, "{inStock}", strconv.FormatBool(product.InStock))
 	text = strings.ReplaceAll(text, "{firstAmount}", formatMoney(firstAmount))
 	return text
-
+}
 	func formatMoney(amount int) string {
 	sums := amount / 100
 	tiyin := amount % 100
@@ -52,4 +52,4 @@ func Converter(product Product, firstAmount int) string {
 		return fmt.Sprintf("%s.%02d", formatted, tiyin)
 	}
 	return formatted
-}}
+}
