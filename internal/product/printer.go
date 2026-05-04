@@ -31,9 +31,11 @@ func Converter(product Product, firstAmount int) string {
 	text = strings.ReplaceAll(text, "{firstAmount}", formatMoney(firstAmount))
 	return text
 }
-	func formatMoney(amount int) string {
+
+func formatMoney(amount int) string {
 	sums := amount / 100
 	tiyin := amount % 100
+
 	s := strconv.Itoa(sums)
 
 	var result []byte
@@ -45,11 +47,14 @@ func Converter(product Product, firstAmount int) string {
 
 		if count%3 == 0 && i != 0 {
 			result = append([]byte{' '}, result...)
-		}	}
+		}
+	}
+
 	formatted := string(result)
 
 	if tiyin > 0 {
 		return fmt.Sprintf("%s.%02d", formatted, tiyin)
 	}
+
 	return formatted
 }
